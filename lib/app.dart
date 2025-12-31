@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -45,36 +43,9 @@ class NunGraduationApp extends ConsumerWidget {
           return child ?? const SizedBox.shrink();
         }
 
-        // Keep web layouts readable by constraining max width.
-        return Container(
-          color: Theme.of(context).scaffoldBackgroundColor,
-          alignment: Alignment.topCenter,
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              const maxMobileWidth = 430.0;
-              final applySidePadding = constraints.maxWidth > maxMobileWidth;
-              final applyVerticalPadding = constraints.maxHeight > 800;
-              final mediaQuery = MediaQuery.of(context);
-              final effectiveWidth =
-                  math.min(mediaQuery.size.width, maxMobileWidth);
-              final constrainedMediaQuery = mediaQuery.copyWith(
-                size: Size(effectiveWidth, mediaQuery.size.height),
-              );
-              return ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: maxMobileWidth),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: applySidePadding ? 16 : 0,
-                    vertical: applyVerticalPadding ? 12 : 0,
-                  ),
-                  child: MediaQuery(
-                    data: constrainedMediaQuery,
-                    child: child,
-                  ),
-                ),
-              );
-            },
-          ),
+        return Padding(
+          padding: const EdgeInsets.all(24),
+          child: child,
         );
       },
     );
