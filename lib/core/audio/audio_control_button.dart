@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:just_audio/just_audio.dart';
 
 import '../utils/audio_manager.dart';
 
@@ -23,8 +24,8 @@ class AudioControlButton extends StatelessWidget {
     return StreamBuilder<PlayerState>(
       stream: audioManager.playerStateStream,
       initialData: audioManager.isPlaying
-          ? const PlayerState(true, ProcessingState.ready)
-          : const PlayerState(false, ProcessingState.idle),
+          ? PlayerState(true, ProcessingState.ready)
+          : PlayerState(false, ProcessingState.idle),
       builder: (context, snapshot) {
         final isPlaying = snapshot.data?.playing ?? audioManager.isPlaying;
 
