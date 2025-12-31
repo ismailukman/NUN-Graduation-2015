@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -8,6 +10,7 @@ import 'core/constants/route_names.dart';
 import 'core/theme/app_theme.dart';
 import 'core/theme/dark_theme.dart';
 import 'core/theme/theme_provider.dart';
+import 'core/utils/audio_manager.dart';
 
 // Screen imports
 import 'features/splash/splash_screen.dart';
@@ -48,11 +51,92 @@ class NunGraduationApp extends ConsumerWidget {
           child: Center(
             child: ConstrainedBox(
               constraints: const BoxConstraints(maxWidth: 1100),
-              child: child,
+              child: _WebAudioGate(child: child),
             ),
           ),
         );
       },
+    );
+  }
+}
+
+class _WebAudioGate extends StatefulWidget {
+  const _WebAudioGate({required this.child});
+
+  final Widget child;
+
+  @override
+  State<_WebAudioGate> createState() => _WebAudioGateState();
+}
+
+class _WebAudioGateState extends State<_WebAudioGate> {
+  late final AudioManager _audioManager;
+  StreamSubscription<bool>? _playingSub;
+  bool _showPrompt = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _audioManager = AudioManager();
+    _showPrompt = !_audioManager.isPlaying;
+    _playingSub = _audioManager.playingStream.listen((isPlaying) {
+      if (!mounted) return;
+      setState(() {
+        _showPrompt = !isPlaying;
+      });
+    });
+  }
+
+  Future<void> _startAudio() async {
+    if (!_showPrompt) return;
+    await _audioManager.play();
+    if (!mounted) return;
+    setState(() {
+      _showPrompt = false;
+    });
+  }
+
+  @override
+  void dispose() {
+    _playingSub?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        widget.child,
+        if (_showPrompt)
+          Positioned.fill(
+            child: Material(
+              color: Colors.black54,
+              child: InkWell(
+                onTap: _startAudio,
+                child: Center(
+                  child: Container(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 16,
+                      vertical: 12,
+                    ),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.surface,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: const [
+                        Icon(Icons.volume_up),
+                        SizedBox(width: 8),
+                        Text('Tap to start audio'),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+      ],
     );
   }
 }

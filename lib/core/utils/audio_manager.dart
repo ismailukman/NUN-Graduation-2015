@@ -123,9 +123,8 @@ class AudioManager {
 
     _operationInProgress = true;
     try {
-      // Always try to stop, even if we think it's not playing
-      // This ensures any lingering playback is terminated
-      await _player.stop();
+      // Pause + seek is more reliable across platforms than stop alone.
+      await _player.pause();
       await _player.seek(Duration.zero);
       onStateChanged?.call(AudioState.stopped);
       debugPrint('AudioManager: Stopped and reset');
