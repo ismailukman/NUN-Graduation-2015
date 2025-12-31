@@ -43,9 +43,14 @@ class NunGraduationApp extends ConsumerWidget {
           return child ?? const SizedBox.shrink();
         }
 
-        return Padding(
-          padding: const EdgeInsets.all(24),
-          child: child,
+        return Container(
+          color: Theme.of(context).scaffoldBackgroundColor,
+          child: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 1100),
+              child: child,
+            ),
+          ),
         );
       },
     );

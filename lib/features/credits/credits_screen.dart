@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../core/audio/audio_control_button.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/constants/route_names.dart';
 import '../../core/utils/audio_manager.dart';
@@ -92,12 +91,8 @@ class _CreditsScreenState extends State<CreditsScreen> {
           onPressed: () => context.go(RouteNames.mainMenu),
           tooltip: 'Back to Main Menu',
         ),
-        actions: [
-          // Audio control button
-          AudioControlButton(
-            iconColor: theme.colorScheme.onPrimary,
-          ),
-          const SizedBox(width: 8),
+        actions: const [
+          SizedBox(width: 8),
         ],
       ),
       body: ListView(

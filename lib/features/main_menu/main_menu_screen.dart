@@ -4,7 +4,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../core/audio/audio_control_button.dart';
 import '../../core/constants/route_names.dart';
 import '../../core/theme/theme_provider.dart';
 import '../../data/repositories/data_repository.dart';
@@ -31,9 +30,6 @@ class MainMenuScreen extends ConsumerWidget {
           tooltip: 'Back to Officials',
         ),
         actions: [
-          // Audio Control
-          const AudioControlButton(),
-
           // Theme Toggle
           IconButton(
             icon: Icon(isDarkMode ? Icons.light_mode : Icons.dark_mode),

@@ -3,6 +3,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/audio/audio_control_button.dart';
 import '../../core/constants/app_constants.dart';
 import '../../core/constants/route_names.dart';
 import '../../core/theme/theme_provider.dart';
@@ -24,6 +25,10 @@ class OfficialsScreen extends ConsumerWidget{
       appBar: AppBar(
         title: const Text('University Officials'),
         centerTitle: true,
+        actions: const [
+          AudioControlButton(),
+          SizedBox(width: 8),
+        ],
       ),
       body: Column(
         children: [

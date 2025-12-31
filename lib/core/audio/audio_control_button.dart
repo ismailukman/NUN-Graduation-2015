@@ -20,22 +20,28 @@ class AudioControlButton extends StatelessWidget {
   Widget build(BuildContext context) {
     final audioManager = AudioManager();
 
-    return StreamBuilder<bool>(
-      stream: audioManager.playingStream,
-      initialData: audioManager.isPlaying,
+    return StreamBuilder<PlayerState>(
+      stream: audioManager.playerStateStream,
+      initialData: audioManager.isPlaying
+          ? const PlayerState(true, ProcessingState.ready)
+          : const PlayerState(false, ProcessingState.idle),
       builder: (context, snapshot) {
-        final isPlaying = snapshot.data ?? false;
+        final isPlaying = snapshot.data?.playing ?? audioManager.isPlaying;
 
         return IconButton(
           icon: Icon(
-            isPlaying ? Icons.stop : Icons.play_arrow,
+            isPlaying ? Icons.volume_up : Icons.volume_off,
             size: iconSize,
           ),
           color: iconColor ?? Theme.of(context).colorScheme.primary,
           onPressed: () async {
-            await audioManager.togglePlayPause();
+            if (isPlaying) {
+              await audioManager.stop();
+            } else {
+              await audioManager.play();
+            }
           },
-          tooltip: isPlaying ? 'Stop music' : 'Play music',
+          tooltip: isPlaying ? 'Mute music' : 'Play music',
         );
       },
     );
