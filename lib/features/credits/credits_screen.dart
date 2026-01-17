@@ -193,7 +193,7 @@ class _CreditsScreenState extends State<CreditsScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            'Â© ${AppConstants.graduationYear} ${AppConstants.universityName}',
+            '© ${AppConstants.footerYear} ${AppConstants.universityName}',
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),

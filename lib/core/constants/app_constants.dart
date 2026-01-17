@@ -21,6 +21,7 @@ class AppConstants {
   // University Information
   static const String universityName = 'Nile University of Nigeria';
   static const String graduationYear = '2015';
+  static const String footerYear = '2026';
 
   // Splash Screen
   static const int splashDurationSeconds = 5;
