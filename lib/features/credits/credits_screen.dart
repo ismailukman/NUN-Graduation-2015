@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+﻿import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
 
@@ -193,7 +193,7 @@ class _CreditsScreenState extends State<CreditsScreen> {
           ),
           const SizedBox(height: 8),
           Text(
-            '� ${AppConstants.footerYear} ${AppConstants.universityName}',
+            '© ${AppConstants.footerYear} ${AppConstants.universityName}',
             style: theme.textTheme.bodySmall?.copyWith(
               color: theme.colorScheme.onSurfaceVariant,
             ),
